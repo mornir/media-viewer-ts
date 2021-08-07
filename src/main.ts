@@ -13,6 +13,7 @@ const galleryElement = document.getElementById("gallery")!
 
 galleryElement.addEventListener("lgSlideItemLoad", (slide) => {
   // Free up memory
+  // @ts-ignore
   URL.revokeObjectURL(slide.detail.index)
 })
 
@@ -23,21 +24,31 @@ async function openGallery() {
     const images = []
 
     for await (const value of dirHandle.values()) {
+      // @ts-ignore
       const file = await value.getFile()
 
       console.log(file)
 
+      // @ts-ignore
       if (file.type === "image/jpeg") {
         const objectUrl = URL.createObjectURL(file)
         images.push({ src: objectUrl })
       }
 
+      // @ts-ignore
       if (file.type === "video/webm") {
         const objectUrl = URL.createObjectURL(file)
         images.push({
           video: {
             source: [{ src: objectUrl, type: "video/webm" }],
-            attributes: { preload: false, controls: true },
+            attributes: {
+              preload: false,
+              controls: true,
+              playsinline: true,
+              muted: true,
+              autoplay: true,
+              loop: true,
+            },
           },
         })
       }
@@ -51,12 +62,12 @@ async function openGallery() {
   }
 }
 
+// @ts-ignore
 function createGallery(media) {
   return lightGallery(galleryElement, {
     dynamic: true,
     plugins: [lgZoom, FullScreen, Video],
     closeOnTap: false,
-    autoplayVideoOnSlide: true,
     counter: false,
     download: false,
     mousewheel: true,
