@@ -1,8 +1,37 @@
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #374151;
+  height: 100%;
+}
+
+.main {
+  color: white;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.upload {
+  align-self: self-start;
+}
+
+.main h1 {
+  font-size: 5rem;
+  font-weight: 300;
+}
+
+.main h2 {
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+.load-images-btn {
+  font-size: 3rem;
 }

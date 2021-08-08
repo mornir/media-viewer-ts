@@ -1,44 +1,35 @@
+import dragDrop from "drag-drop"
+
 import lightGallery from "lightgallery"
 import "lightgallery/css/lightgallery.css"
 import "lightgallery/css/lg-zoom.css"
 import "lightgallery/css/lg-fullscreen.css"
 import "lightgallery/css/lg-video.css"
+
 // Plugins
 import FullScreen from "lightgallery/plugins/fullscreen"
 import lgZoom from "lightgallery/plugins/zoom"
 import Video from "lightgallery/plugins/video"
 
-const loadImagesButton = document.querySelector("#load-images")!
+const loadImagesButton = document.getElementById("load-images-btn")!
 const galleryElement = document.getElementById("gallery")!
 
-galleryElement.addEventListener("lgSlideItemLoad", (slide) => {
-  // Free up memory
-  // @ts-ignore
-  URL.revokeObjectURL(slide.detail.index)
-})
-
-async function openGallery() {
-  try {
-    const dirHandle = await window.showDirectoryPicker()
-
-    const images = []
-
-    for await (const value of dirHandle.values()) {
-      // @ts-ignore
-      const file = await value.getFile()
-
-      console.log(file)
-
+function generateLightGalleryItems(files) {
+  return files
+    .map((file) => {
       // @ts-ignore
       if (file.type === "image/jpeg") {
         const objectUrl = URL.createObjectURL(file)
-        images.push({ src: objectUrl })
+
+        return {
+          src: objectUrl,
+        }
       }
 
       // @ts-ignore
       if (file.type === "video/webm") {
         const objectUrl = URL.createObjectURL(file)
-        images.push({
+        return {
           video: {
             source: [{ src: objectUrl, type: "video/webm" }],
             attributes: {
@@ -50,15 +41,26 @@ async function openGallery() {
               loop: true,
             },
           },
-        })
+        }
       }
+      return null
+    })
+    .filter(Boolean)
+}
+
+async function getFiles() {
+  try {
+    const dirHandle = await window.showDirectoryPicker()
+    const files = []
+    for await (const value of dirHandle.values()) {
+      // @ts-ignore
+      const file = await value.getFile()
+      files.push(file)
     }
-
-    const gallery = createGallery(images)
-
-    gallery.openGallery()
+    return files
   } catch (error) {
     console.error(error)
+    return []
   }
 }
 
@@ -73,9 +75,26 @@ function createGallery(media) {
     mousewheel: true,
     loop: false,
     hideControlOnEnd: true,
-
     dynamicEl: media,
   })
 }
 
-loadImagesButton.addEventListener("click", openGallery)
+loadImagesButton.addEventListener("click", async () => {
+  const files = await getFiles()
+  const galleryItems = generateLightGalleryItems(files)
+  const gallery = createGallery(galleryItems)
+  gallery.openGallery()
+})
+
+galleryElement.addEventListener("lgSlideItemLoad", (slide) => {
+  // Free up memory
+  // @ts-ignore
+  URL.revokeObjectURL(slide.detail.index)
+})
+
+// @ts-ignore
+dragDrop("#upload", (files) => {
+  const galleryItems = generateLightGalleryItems(files)
+  const gallery = createGallery(galleryItems)
+  gallery.openGallery()
+})

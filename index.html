@@ -4,14 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <title>Media Viewer</title>
   </head>
 
   <body>
+    <div class="main">
+      <h1>Media Viewer</h1>
+      <div id="upload" class="upload">
+        <h2>Images Folder</h2>
+        <p>Drag and drop or upload a folder</p>
+        <button id="load-images-btn" type="button">Upload Folder</button>
+      </div>
+    </div>
     <div id="gallery"></div>
 
-    <button id="load-images" type="button">Open Images Folder</button>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
