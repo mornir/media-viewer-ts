@@ -1,3 +1,4 @@
+// @ts-ignore
 import dragDrop from "drag-drop"
 
 import lightGallery from "lightgallery"
@@ -14,38 +15,42 @@ import Video from "lightgallery/plugins/video"
 const loadImagesButton = document.getElementById("load-images-btn")!
 const galleryElement = document.getElementById("gallery")!
 
+// @ts-ignore
 function generateLightGalleryItems(files) {
-  return files
-    .map((file) => {
+  return (
+    files
       // @ts-ignore
-      if (file.type === "image/jpeg") {
-        const objectUrl = URL.createObjectURL(file)
+      .map((file) => {
+        // @ts-ignore
+        if (file.type === "image/jpeg") {
+          const objectUrl = URL.createObjectURL(file)
 
-        return {
-          src: objectUrl,
+          return {
+            src: objectUrl,
+          }
         }
-      }
 
-      // @ts-ignore
-      if (file.type === "video/webm") {
-        const objectUrl = URL.createObjectURL(file)
-        return {
-          video: {
-            source: [{ src: objectUrl, type: "video/webm" }],
-            attributes: {
-              preload: false,
-              controls: true,
-              playsinline: true,
-              muted: true,
-              autoplay: true,
-              loop: true,
+        // @ts-ignore
+        if (file.type === "video/webm") {
+          const objectUrl = URL.createObjectURL(file)
+          return {
+            video: {
+              source: [{ src: objectUrl, type: "video/webm" }],
+              attributes: {
+                preload: false,
+                controls: true,
+                playsinline: true,
+                muted: true,
+                autoplay: true,
+                loop: true,
+              },
             },
-          },
+          }
         }
-      }
-      return null
-    })
-    .filter(Boolean)
+        return null
+      })
+      .filter(Boolean)
+  )
 }
 
 async function getFiles() {
