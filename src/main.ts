@@ -7,6 +7,8 @@ import "lightgallery/css/lg-zoom.css"
 import "lightgallery/css/lg-fullscreen.css"
 import "lightgallery/css/lg-video.css"
 
+import "lightgallery/lg-events.d.ts"
+
 // Plugins
 import FullScreen from "lightgallery/plugins/fullscreen"
 import lgZoom from "lightgallery/plugins/zoom"
@@ -15,42 +17,36 @@ import Video from "lightgallery/plugins/video"
 const loadImagesInput = document.getElementById("load-images-input")!
 const galleryElement = document.getElementById("gallery")!
 
-// @ts-ignore
-function generateLightGalleryItems(files) {
-  return (
-    files
-      // @ts-ignore
-      .map((file) => {
-        // @ts-ignore
-        if (file.type === "image/jpeg") {
-          const objectUrl = URL.createObjectURL(file)
+function generateLightGalleryItems(files: Array<File>) {
+  return files
+    .map((file) => {
+      if (file.type === "image/jpeg") {
+        const objectUrl = URL.createObjectURL(file)
 
-          return {
-            src: objectUrl,
-          }
+        return {
+          src: objectUrl,
         }
+      }
 
-        // @ts-ignore
-        if (file.type === "video/webm") {
-          const objectUrl = URL.createObjectURL(file)
-          return {
-            video: {
-              source: [{ src: objectUrl, type: "video/webm" }],
-              attributes: {
-                preload: false,
-                controls: true,
-                playsinline: true,
-                muted: true,
-                autoplay: true,
-                loop: true,
-              },
+      if (file.type === "video/webm") {
+        const objectUrl = URL.createObjectURL(file)
+        return {
+          video: {
+            source: [{ src: objectUrl, type: "video/webm" }],
+            attributes: {
+              preload: false,
+              controls: true,
+              playsinline: true,
+              muted: true,
+              autoplay: true,
+              loop: true,
             },
-          }
+          },
         }
-        return null
-      })
-      .filter(Boolean)
-  )
+      }
+      return null
+    })
+    .filter(Boolean)
 }
 
 // @ts-ignore
@@ -74,16 +70,16 @@ galleryElement.addEventListener("lgSlideItemLoad", (slide) => {
   URL.revokeObjectURL(slide.detail.index)
 })
 
-// @ts-ignore
-dragDrop("#upload", (files) => {
+dragDrop("#upload", (files: Array<File>) => {
   const galleryItems = generateLightGalleryItems(files)
   const gallery = createGallery(galleryItems)
   gallery.openGallery()
 })
 
-loadImagesInput.addEventListener("change", function (event) {
-  const files = Array.from(event.target.files)
-  const galleryItems = generateLightGalleryItems(files)
+loadImagesInput.addEventListener("change", (event) => {
+  const target = event.target as HTMLInputElement
+  const files = target.files as FileList
+  const galleryItems = generateLightGalleryItems(Array.from(files))
   const gallery = createGallery(galleryItems)
   gallery.openGallery()
 })
