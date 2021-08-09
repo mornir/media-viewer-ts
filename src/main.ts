@@ -18,19 +18,18 @@ const galleryElement = document.getElementById("gallery")!
 function generateLightGalleryItems(files: Array<File>) {
   return files
     .map((file) => {
-      if (file.type === "image/jpeg") {
+      if (file.type.split("/")[0] === "image") {
         const objectUrl = URL.createObjectURL(file)
-
         return {
           src: objectUrl,
         }
       }
 
-      if (file.type === "video/webm") {
+      if (file.type.split("/")[0] === "video") {
         const objectUrl = URL.createObjectURL(file)
         return {
           video: {
-            source: [{ src: objectUrl, type: "video/webm" }],
+            source: [{ src: objectUrl, type: file.type }],
             attributes: {
               preload: false,
               controls: true,
