@@ -7,8 +7,6 @@ import "lightgallery/css/lg-zoom.css"
 import "lightgallery/css/lg-fullscreen.css"
 import "lightgallery/css/lg-video.css"
 
-import "lightgallery/lg-events.d.ts"
-
 // Plugins
 import FullScreen from "lightgallery/plugins/fullscreen"
 import lgZoom from "lightgallery/plugins/zoom"
