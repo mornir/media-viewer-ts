@@ -32,7 +32,7 @@ function generateLightGalleryItems(files: Array<File>) {
             source: [{ src: objectUrl, type: file.type }],
             attributes: {
               preload: false,
-              controls: true,
+              controls: false,
               playsinline: true,
               muted: true,
               autoplay: true,
