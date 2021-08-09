@@ -7,7 +7,6 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "@types/wicg-file-system-access": "^2020.9.2",
     "autoprefixer": "^10.3.1",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7",

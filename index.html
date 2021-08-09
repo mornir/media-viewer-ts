@@ -16,18 +16,18 @@
 
   <body
     class="
-      bg-gray-700
-      h-full
-      text-white text-center
-      font-lato
       flex
       items-center
       justify-center
+      h-full
+      text-center text-white
+      bg-gray-700
+      font-lato
     "
   >
     <div>
-      <h1 class="text-8xl font-light mb-20">Media Viewer</h1>
-      <div id="upload" class="border-2 border-white py-10 px-20 border-dashed">
+      <h1 class="mb-20 font-light text-8xl">Media Viewer</h1>
+      <div id="upload" class="px-20 py-10 border-2 border-white border-dashed">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -42,25 +42,31 @@
             fill="currentColor"
           ></path>
         </svg>
-        <p class="text-xl mb-8">
+        <p class="mb-8 text-xl">
           Drag and drop or open a folder containing images/videos
         </p>
-        <button
-          id="load-images-btn"
-          type="button"
+        <label
+          for="load-images-input"
           class="
-            text-xl
-            border border-white
+            inline-block
             px-10
             py-2
-            rounded
-            hover:border-yellow-500 hover:text-yellow-500
+            text-xl
             transition-colors
             duration-300
+            border border-white
+            rounded
+            hover:border-yellow-500 hover:text-yellow-500
           "
+          >Upload Folder</label
         >
-          Upload Folder
-        </button>
+        <input
+          type="file"
+          id="load-images-input"
+          webkitdirectory
+          multiple
+          class="sr-only"
+        />
       </div>
     </div>
     <div id="gallery"></div>

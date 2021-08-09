@@ -12,7 +12,7 @@ import FullScreen from "lightgallery/plugins/fullscreen"
 import lgZoom from "lightgallery/plugins/zoom"
 import Video from "lightgallery/plugins/video"
 
-const loadImagesButton = document.getElementById("load-images-btn")!
+const loadImagesInput = document.getElementById("load-images-input")!
 const galleryElement = document.getElementById("gallery")!
 
 // @ts-ignore
@@ -53,22 +53,6 @@ function generateLightGalleryItems(files) {
   )
 }
 
-async function getFiles() {
-  try {
-    const dirHandle = await window.showDirectoryPicker()
-    const files = []
-    for await (const value of dirHandle.values()) {
-      // @ts-ignore
-      const file = await value.getFile()
-      files.push(file)
-    }
-    return files
-  } catch (error) {
-    console.error(error)
-    return []
-  }
-}
-
 // @ts-ignore
 function createGallery(media) {
   return lightGallery(galleryElement, {
@@ -84,13 +68,6 @@ function createGallery(media) {
   })
 }
 
-loadImagesButton.addEventListener("click", async () => {
-  const files = await getFiles()
-  const galleryItems = generateLightGalleryItems(files)
-  const gallery = createGallery(galleryItems)
-  gallery.openGallery()
-})
-
 galleryElement.addEventListener("lgSlideItemLoad", (slide) => {
   // Free up memory
   // @ts-ignore
@@ -103,3 +80,38 @@ dragDrop("#upload", (files) => {
   const gallery = createGallery(galleryItems)
   gallery.openGallery()
 })
+
+loadImagesInput.addEventListener("change", function (event) {
+  const files = Array.from(event.target.files)
+  const galleryItems = generateLightGalleryItems(files)
+  const gallery = createGallery(galleryItems)
+  gallery.openGallery()
+})
+
+// Example usage of showDirectoryPicker
+/* 
+const loadImagesButton = document.getElementById("load-images-btn")!
+
+loadImagesButton.addEventListener("click", async () => {
+  const files = await getFiles()
+  const galleryItems = generateLightGalleryItems(files)
+  const gallery = createGallery(galleryItems)
+  gallery.openGallery()
+})
+
+
+async function getFiles() {
+  try {
+    const dirHandle = await window.showDirectoryPicker()
+    const files = []
+    for await (const value of dirHandle.values()) {
+      // @ts-ignore
+      const file = await value.getFile()
+      files.push(file)
+    }
+    return files
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+} */
