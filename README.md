@@ -9,4 +9,4 @@
 - Navigates between media with keyboard or mouse wheel
 - Autoplays video
 - Works locally (direct read from the disk, no upload to server)
-- Works offline (WIP)
+- Works offline

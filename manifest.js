@@ -1,5 +1,6 @@
 export default {
   name: "Media Viewer",
+  short_name: "Media Viewer",
   icons: [
     {
       src: "/favicon.svg",

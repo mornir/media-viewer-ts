@@ -4,7 +4,6 @@ import manifest from "./manifest"
 export default defineConfig({
   plugins: [
     VitePWA({
-      includeAssets: ["favicon.svg"],
       registerType: "autoUpdate",
       manifest,
     }),
