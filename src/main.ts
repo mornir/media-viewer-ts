@@ -75,8 +75,8 @@ galleryElement.addEventListener("lgAfterSlide", (slide) => {
 })
 
 galleryElement.addEventListener("lgAfterClose", (event) => {
-  objectUrls.length = 0
   objectUrls.forEach((url) => URL.revokeObjectURL(url))
+  objectUrls.length = 0
 
   // Force change input change event
   // @ts-ignore
