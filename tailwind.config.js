@@ -6,6 +6,7 @@ module.exports = {
     fontFamily: {
       lato: "'Lato', serif",
     },
+
     extend: {},
   },
   variants: {

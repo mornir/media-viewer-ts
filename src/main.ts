@@ -1,3 +1,6 @@
+import { registerSW } from "virtual:pwa-register"
+registerSW()
+
 // @ts-ignore
 import dragDrop from "drag-drop"
 
